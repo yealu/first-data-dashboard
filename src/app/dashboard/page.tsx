@@ -12,18 +12,16 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { useSheetData } from "@/lib/hooks/useSheetData"
+import { Period, Department, Project } from "@/lib/types/dashboard"
 
 function DashboardContent() {
   const { filters, updateFilters, filteredData } = useDashboard()
   const latestData = filteredData[filteredData.length - 1]
-  const { data, isLoading } = useSheetData('financial')
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">financial dashboard
-          
-        </h1>
+        <h1 className="text-2xl font-bold">financial dashboard</h1>
         <Link href="/dashboard/detail">
           <Button variant="outline" className="flex items-center gap-2">
             상세 페이지
@@ -36,7 +34,7 @@ function DashboardContent() {
         <div className="flex items-center space-x-2">
           <Select
             value={filters.period}
-            onValueChange={(value) => updateFilters({ period: value as any })}
+            onValueChange={(value) => updateFilters({ period: value as Period })}
           >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="기간 선택" />
@@ -58,58 +56,42 @@ function DashboardContent() {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  매출 성장률
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">매출 성장률</CardTitle>
                 <TrendingUp className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">+12.5%</div>
-                <p className="text-xs text-muted-foreground">
-                  전월 대비 +2.1%
-                </p>
+                <p className="text-xs text-muted-foreground">전월 대비 +2.1%</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  순이익률
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">순이익률</CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{latestData?.profitMargin.toFixed(1)}%</div>
-                <p className="text-xs text-muted-foreground">
-                  전월 대비 +0.5%
-                </p>
+                <p className="text-xs text-muted-foreground">전월 대비 +0.5%</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  EBITDA 마진
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">EBITDA 마진</CardTitle>
                 <LineChart className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{latestData?.ebitdaMargin.toFixed(1)}%</div>
-                <p className="text-xs text-muted-foreground">
-                  전월 대비 -0.2%
-                </p>
+                <p className="text-xs text-muted-foreground">전월 대비 -0.2%</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  ROE
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">ROE</CardTitle>
                 <PieChart className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">21.3%</div>
-                <p className="text-xs text-muted-foreground">
-                  전월 대비 +1.2%
-                </p>
+                <p className="text-xs text-muted-foreground">전월 대비 +1.2%</p>
               </CardContent>
             </Card>
           </div>
@@ -132,7 +114,7 @@ function DashboardContent() {
                   <div className="grid gap-4 grid-cols-2">
                     <Select
                       value={filters.department}
-                      onValueChange={(value) => updateFilters({ department: value as any })}
+                      onValueChange={(value) => updateFilters({ department: value as Department })}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="부서 선택" />
@@ -146,7 +128,7 @@ function DashboardContent() {
                     </Select>
                     <Select
                       value={filters.project}
-                      onValueChange={(value) => updateFilters({ project: value as any })}
+                      onValueChange={(value) => updateFilters({ project: value as Project })}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="프로젝트 선택" />
